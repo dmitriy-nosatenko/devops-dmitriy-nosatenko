@@ -17,5 +17,7 @@ docker volume create --label "$LABEL" chinook-pgdata
 
 docker run -d --name "$DB" --network "$NET" --label "$LABEL" \
 -v chinook-pgdata:/var/lib/postgresql/data \
--e POSTGRES_USER="$DB_USER" -e POSTGRES_PASSWORD="DB_PASS" -e POSTGRES_DB="$DB_NAME" \
+-e POSTGRES_USER="$DB_USER" -e POSTGRES_PASSWORD="$DB_PASS" -e POSTGRES_DB="$DB_NAME" \
 postgres:17
+
+until docker exec "$DB" pg_isready -h 127.0.0.1 -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; do sleep 1; done
