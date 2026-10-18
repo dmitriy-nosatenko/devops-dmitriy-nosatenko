@@ -22,7 +22,7 @@ postgres:17
 
 until docker exec "$DB" pg_isready -h 127.0.0.1 -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; do sleep 1; done
 
-docker build --target seeder --label "$LABEL" -t chinook-seeder
+docker build --target seeder --label "$LABEL" -t chinook-seeder .
 
 docker run --rm --name chinook-seeder --network "$NET" --label "$LABEL" \
 -v "$(pwd)/Chinook.db:/app.Chinook.db:ro" \
