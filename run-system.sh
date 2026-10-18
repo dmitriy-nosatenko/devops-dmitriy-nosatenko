@@ -29,3 +29,15 @@ docker run --rm --name chinook-seeder --network "$NET" --label "$LABEL" \
 -e SQLITE_FILE=/app/Chinook.db \
 -e DATABASE_URL="postgres://$DB_USER:$DB_PASS@$DB:5432/$DB_NAME" \
 chinook-seeder 
+
+docker run -d --name mcp-gateway --network "$NET" --label "$LABEL" \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v "$(pwd)/mcp_config.yaml:/mcp_config.yaml:ro" \
+-v "$(pwd)/mcp_secret.env:/run/secrets/database-url:ro" \
+docker/mcp-gateway:latest \
+--transport=sse \
+--secrets=/run/secrets/database-url \
+--allow-unauthenticated \
+--servers=cockroachdb \
+--tools=execute_query \
+--config=/mcp_config.yaml 
