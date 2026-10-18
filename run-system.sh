@@ -25,7 +25,7 @@ until docker exec "$DB" pg_isready -h 127.0.0.1 -U "$DB_USER" -d "$DB_NAME" >/de
 docker build --target seeder --label "$LABEL" -t chinook-seeder .
 
 docker run --rm --name chinook-seeder --network "$NET" --label "$LABEL" \
--v "$(pwd)/Chinook.db:/app.Chinook.db:ro" \
+-v "$(pwd)/Chinook.db:/app/Chinook.db:ro" \
 -e SQLITE_FILE=/app/Chinook.db \
 -e DATABASE_URL="postgres://$DB_USER:$DB_PASS@$DB:5432/$DB_NAME" \
 chinook-seeder 
