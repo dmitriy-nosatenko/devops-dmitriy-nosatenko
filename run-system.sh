@@ -15,4 +15,7 @@ docker network create --label "$LABEL" "$NET"
 
 docker volume create --label "$LABEL" chinook-pgdata
 
-
+docker run -d --name "$DB" --network "$NET" --label "$LABEL" \
+-v chinook-pgdata:/var/lib/postgresql/data \
+-e POSTGRES_USER="$DB_USER" -e POSTGRES_PASSWORD="DB_PASS" -e POSTGRES_DB="$DB_NAME" \
+postgres:17
