@@ -1,2 +1,3 @@
 #!/bin/sh
-# TODO
+cd "$(dirname "$0")"
+LABEL=project=chinook 
