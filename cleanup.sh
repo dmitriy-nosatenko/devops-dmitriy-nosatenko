@@ -8,4 +8,4 @@ docker volume rm $(docker volume ls -q --filter "label=$LABEL") 2>/dev/null || t
 
 docker network rm $(docker network ls -q --filter "label=$LABEL") 2>/dev/null || true
 
-docker image rm $(docker images -1 --filter "label=$LABEL") 2>/dev/null || true 
+docker image rm $(docker images -q --filter "label=$LABEL") 2>/dev/null || true 
