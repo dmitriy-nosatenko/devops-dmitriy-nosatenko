@@ -13,3 +13,6 @@ DB_NAME=chinook
 
 docker network create --label "$LABEL" "$NET"
 
+docker volume create --label "$LABEL" chinook-pgdata
+
+
