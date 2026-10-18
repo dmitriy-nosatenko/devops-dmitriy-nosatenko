@@ -41,3 +41,5 @@ docker/mcp-gateway:latest \
 --servers=cockroachdb \
 --tools=execute_query \
 --config=/mcp_config.yaml 
+
+docker build --target agent --label "$LABEL" -t chinook-agent
