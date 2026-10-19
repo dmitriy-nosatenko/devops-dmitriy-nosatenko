@@ -1,4 +1,7 @@
 #!/bin/sh
+
+docker stop $(docker ps -q --filter "label=$LABEL") 2>/dev/null || true 
+
 cd "$(dirname "$0")"
 LABEL=project=chinook 
 
