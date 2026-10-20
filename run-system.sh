@@ -42,6 +42,8 @@ docker/mcp-gateway:latest \
 --tools=execute_query \
 --config=/mcp_config.yaml 
 
+until docker logs mcp-gateway 2>&1 | grep -q "Start sse server"; do sleep 1; done
+
 docker build --target agent --label "$LABEL" -t chinook-agent . 
 
 docker run --rm --name chinook-agent --network "$NET" --label "$LABEL" \
