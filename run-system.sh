@@ -11,14 +11,24 @@ DB_USER=chinook
 DB_PASS=chinookpw
 DB_NAME=chinook
 
+#initiating the database metadata as well as the label and network name
+
 docker network create --label "$LABEL" "$NET"
 
+# creating a network named chinook-net
+
 docker volume create --label "$LABEL" chinook-pgdata
+
+# creating a volume called chinook-pgdata
 
 docker run -d --name "$DB" --network "$NET" --label "$LABEL" \
 -v chinook-pgdata:/var/lib/postgresql/data \
 -e POSTGRES_USER="$DB_USER" -e POSTGRES_PASSWORD="$DB_PASS" -e POSTGRES_DB="$DB_NAME" \
 postgres:17
+
+# create a new container called chinook-db
+# its created in the chinook-net network
+# mounting the volume chinook-pgdata to the database and use the DB credentials for the database startup
 
 until docker exec "$DB" pg_isready -h 127.0.0.1 -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; do sleep 1; done
 
